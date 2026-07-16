@@ -25,7 +25,7 @@ IMG_SIZE = (224, 224)
 # TODO: replace with your REAL validation accuracy from Colab (printed at the
 # end of Cell 4 in train_model.py as "Final val accuracy: ..."). Do not leave
 # this as a guess — you may be asked to justify it live.
-VALIDATION_ACCURACY_DISPLAY = "91.2"  # e.g. "91.2"
+VALIDATION_ACCURACY_DISPLAY = "—"  # e.g. "91.2"
 
 # ---- Load model + labels once at startup ----
 model = tf.keras.models.load_model("waste_classifier.keras")
@@ -277,7 +277,7 @@ CUSTOM_CSS = """
     animation: skcFadeIn 0.4s ease;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.skc-card:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(0,0,0,.24); }
+.skc-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,.22); }
 
 .skc-mini-card {
     background: #0F172A;
@@ -287,8 +287,8 @@ CUSTOM_CSS = """
 }
 
 @keyframes skcFadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 #skc-hero {
@@ -361,7 +361,7 @@ button.primary:hover { background: var(--primary-hover) !important; }
 }
 """
 
-with gr.Blocks(title="Smart Kachra Sorter AI", css=CUSTOM_CSS) as demo:
+with gr.Blocks(title="Smart Kachra Sorter AI") as demo:
     gr.HTML(f"""
     <div id="skc-hero">
         <h1>♻️ Smart Kachra Sorter AI</h1>
@@ -416,13 +416,13 @@ with gr.Blocks(title="Smart Kachra Sorter AI", css=CUSTOM_CSS) as demo:
 if __name__ == "__main__":
     if os.environ.get("SPACE_ID"):
         # Hugging Face Spaces — it hosts and ports the app itself.
-        demo.launch()
+        demo.launch(css=CUSTOM_CSS)
     elif os.environ.get("PORT"):
         # Render (and most other generic cloud hosts) inject a PORT env var
         # and scan for a service listening on it. Gradio defaults to binding
         # only to 127.0.0.1:7860, which Render's external scanner can't see —
         # that mismatch is exactly what "No open ports detected" means.
-        demo.launch(server_name="0.0.0.0", server_port=int(os.environ["PORT"]))
+        demo.launch(server_name="0.0.0.0", server_port=int(os.environ["PORT"]), css=CUSTOM_CSS)
     else:
         # Local development — open in browser and get a shareable public link
-        demo.launch(inbrowser=True, share=True)
+        demo.launch(inbrowser=True, share=True, css=CUSTOM_CSS)
