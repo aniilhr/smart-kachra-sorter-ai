@@ -31,9 +31,15 @@ TOTAL_SCANS = {"count": 0}
 
 
 def preprocess(image: Image.Image) -> np.ndarray:
+    # IMPORTANT: do NOT call mobilenet_v2.preprocess_input() here.
+    # train_model.py applies preprocess_input INSIDE the model graph (on the
+    # symbolic input tensor, before base_model), so it gets saved as part of
+    # waste_classifier.keras itself. The model expects raw 0-255 pixel values
+    # and normalizes them internally. Normalizing here too double-applies it
+    # and corrupts the input (confirmed: collapses confident predictions to
+    # near-uniform ~33% across classes).
     image = image.convert("RGB").resize(IMG_SIZE)
     arr = np.array(image, dtype=np.float32)
-    arr = tf.keras.applications.mobilenet_v2.preprocess_input(arr)
     return np.expand_dims(arr, axis=0)
 
 
