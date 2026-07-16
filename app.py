@@ -213,8 +213,14 @@ EMPTY_RESULT_HTML = """
     Upload or capture a photo, then press Classify.
 </div>
 """
-EMPTY_DISPOSAL_HTML = '<div class="skc-card" style="min-height:60px;"></div>'
-EMPTY_IMPACT_HTML = '<div class="skc-card" style="min-height:60px;"></div>'
+EMPTY_DISPOSAL_HTML = (
+    '<div class="skc-card" style="min-height:60px;color:var(--text-secondary);'
+    'font-size:13px;">Disposal guidance will appear here.</div>'
+)
+EMPTY_IMPACT_HTML = (
+    '<div class="skc-card" style="min-height:60px;color:var(--text-secondary);'
+    'font-size:13px;">Environmental impact will appear here.</div>'
+)
 
 
 def classify(image: Image.Image):
@@ -267,7 +273,17 @@ CUSTOM_CSS = """
     background: var(--bg) !important;
     font-family: 'Inter', sans-serif !important;
 }
-.gradio-container * { color: var(--text-primary); }
+/* No blanket color rule here on purpose. Every custom card/text element
+   below sets its own color explicitly inline. Native Gradio components
+   (accordion, image toolbar) are left to their own default styling so
+   their text/icons stay correctly contrasted against their own light
+   background — forcing white text onto them was making them render
+   white-on-white and disappear. */
+.skc-accordion, .skc-accordion * {
+    background: var(--card) !important;
+    color: var(--text-secondary) !important;
+    border-color: #1F2937 !important;
+}
 
 .skc-card {
     background: var(--card);
@@ -397,7 +413,8 @@ with gr.Blocks(title="Smart Kachra Sorter AI") as demo:
     gr.HTML(f'<div class="skc-section-title">{ICON_CHART} Session dashboard</div>')
     dashboard_output = gr.HTML(value=render_dashboard())
 
-    with gr.Accordion("⚠️ Categories not yet supported by this model", open=False):
+    with gr.Accordion("⚠️ Categories not yet supported by this model", open=False,
+                      elem_classes=["skc-accordion"]):
         gr.Markdown("\n".join(f"- {item}" for item in NOT_YET_SUPPORTED) +
                     "\n\n*(Planned future work — see README)*")
 
