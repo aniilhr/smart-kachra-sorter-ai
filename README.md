@@ -71,7 +71,7 @@ See `train_model.py` for the exact merge and training pipeline.
 - Head: GlobalAveragePooling → Dropout(0.3) → Dense(6, softmax)
 - Data augmentation: random flip, rotation, zoom
 - Trained for 10 epochs on the merged dataset (see `train_model.py`)
-- Validation accuracy: **[fill in after training — printed at end of Cell 4]**
+- Validation accuracy: **---**
 
 MobileNetV2 was chosen over a larger backbone (e.g. EfficientNetB0) because it
 trains faster on limited compute/time and is small enough to load quickly on
@@ -81,7 +81,7 @@ a free Hugging Face Space, without a meaningful accuracy tradeoff for a
 ## Installation (local)
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/aniilhr/smart-kachra-sorter-ai
 cd smart-kachra-sorter
 pip install -r requirements.txt
 # place waste_classifier.keras and labels.json (from train_model.py) in this folder
@@ -95,7 +95,7 @@ Deployed on Hugging Face Spaces (Gradio SDK):
 2. Push `app.py`, `disposal_guide.py`, `requirements.txt`,
    `waste_classifier.keras`, `labels.json` to the Space's git repo
 3. Space auto-builds on push
-4. Live link: **[fill in your Space URL]**
+4. Live link: **----**
 
 ## Screenshots
 
