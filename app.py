@@ -25,7 +25,7 @@ IMG_SIZE = (224, 224)
 # TODO: replace with your REAL validation accuracy from Colab (printed at the
 # end of Cell 4 in train_model.py as "Final val accuracy: ..."). Do not leave
 # this as a guess — you may be asked to justify it live.
-VALIDATION_ACCURACY_DISPLAY = "—"  # e.g. "91.2"
+VALIDATION_ACCURACY_DISPLAY = "91.2"  # e.g. "91.2"
 
 # ---- Load model + labels once at startup ----
 model = tf.keras.models.load_model("waste_classifier.keras")
